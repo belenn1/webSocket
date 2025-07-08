@@ -1,4 +1,5 @@
 import WebSocket from "ws";
+import process from "process";
 
 // Conectar al servidor WebSocket
 const client = new WebSocket("ws://localhost:8080");
@@ -18,3 +19,12 @@ client.on("open", () => {
 client.on("close", () => {
   console.log("Conexión cerrada.");
 });
+
+console.log("Escribe tu nombre:");
+const stdin = process.openStdin();
+
+stdin.addListener("data", (mensaje) => {
+  const mensaje_a_enviar = mensaje.toString()
+  client.send(mensaje_a_enviar)
+
+})
